@@ -5,39 +5,7 @@ echo "########## Installing Dependencies ##########"
 sleep 2
 echo ""
 echo ""
-echo "1. Checking git installation.."
-if ! rpm -qa | grep -qw git; then
-    yum -y install git
-fi
-sleep 2
-echo ""
-echo ""
-echo "2. Checking wget installation.."
-if ! rpm -qa | grep -qw wget; then
-    yum -y install wget
-fi
-sleep 2
-echo ""
-echo ""
-echo "3. Checking rpm-build installation.."
-if ! rpm -qa | grep -qw rpm-build; then
-    yum -y install rpm-build
-fi
-sleep 2
-echo ""
-echo ""
-echo "4. Checking gcc installation.."
-if ! rpm -qa | grep -qw gcc; then
-    yum -y install gcc
-fi
-sleep 2
-echo ""
-echo ""
-echo "5. Checking g++ installation.."
-if ! rpm -qa | grep -qw gcc-c++; then
-    yum -y install gcc-c++
-fi
-sleep 2
+yum install git wget rpm-build gcc gcc-c++
 echo ""
 echo ""
 ### Create and cd into working directory ###
