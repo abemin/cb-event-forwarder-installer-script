@@ -26,7 +26,12 @@ else
 	###  Control will jump here if $DIR does NOT exists ###
 	echo "Creating working directory /root/cb-event/"
 	echo ""
+	sleep 1
 	mkdir $WORKDIR
+	echo "Change into working directory /root/cb-event/"
+	echo ""
+	sleep 1
+	cd $WORKDIR
 fi
 sleep 2
 
