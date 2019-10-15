@@ -5,7 +5,7 @@ echo "########## Installing Dependencies ##########"
 sleep 2
 echo ""
 echo ""
-yum install git wget rpm-build gcc gcc-c++
+yum -y install git wget rpm-build gcc gcc-c++
 echo ""
 echo ""
 ### Create and cd into working directory ###
