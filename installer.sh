@@ -197,7 +197,13 @@ else
 		echo "RPM build failed.."
 		echo ""
 		sleep 2
-		echo "Check EXPORT for GOLANG and re-run script.."
+		echo "Check PATH, GOPATH, GOBIN for GOLANG and re-run script.."
+		################################################
+		### Run below command for EXPORT PATH ##########
+		### ~]#export PATH=$PATH:/usr/local/go/bin  ####
+		### ~]#export GOPATH=/usr/local/go/		    ####
+		### ~]#export GOBIN=/usr/local/go/bin/	    ####
+		################################################
 		echo "Exiting.."
 		exit 1
 	fi
