@@ -3,7 +3,7 @@
 ### Checking CB Response Installation ###
 echo ""
 echo "####################################################"
-echo "####     Checking CB Response Installation	  ####"
+echo "####     Checking CB Response Installation      ####"
 echo "####################################################"
 sleep 2
 echo ""
@@ -30,7 +30,7 @@ else
 		echo ""
 		sleep 2
 	else
-        echo "Exiting.."
+        	echo "Exiting.."
 		sleep 2
 		exit 1
 	fi
@@ -39,6 +39,7 @@ else
 fi
 sleep 2
 echo ""
+
 ### Checking and installing dependencies ###
 echo ""
 echo "####################################################"
