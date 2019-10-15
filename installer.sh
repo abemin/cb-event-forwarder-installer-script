@@ -1,23 +1,25 @@
 #!/bin/bash
 
 ### Checking and installing dependencies ###
-echo "########## Installing Dependencies ##########"
-sleep 2
 echo ""
+echo "####################################################"
+echo "#### Installing CB Event Forwarder dependencies ####"
+echo "####################################################"
+sleep 2
 echo ""
 yum -y install git wget rpm-build gcc gcc-c++
 sleep 2
 echo ""
-echo ""
 
 ### Create and cd into working directory ###
 WORKDIR="/root/cb-event/"
-echo "Checking working directory"
+echo "Checking working directory.."
 echo ""
 if [ -d "$WORKDIR" ]; then
 	### Take action if $GODIR exists ###
 	sleep 2
-	echo "Directory exist! CD into working directory /root/cb-event/"
+	echo "Directory exist!"
+	echo "Change into working directory /root/cb-event/"
 	echo ""
 	cd $WORKDIR
 else
@@ -29,7 +31,7 @@ fi
 sleep 2
 
 ### GOLANG Installation ###
-echo "Checking GoLang installation.."
+echo "Checking GOLang installation.."
 echo ""
 sleep 2
 GODIR="/usr/local/go/"
@@ -50,6 +52,8 @@ else
 	echo ""
 	sleep 2
 	tar -C /usr/local -xzf go1.13.1.linux-amd64.tar.gz
+	echo "Done.."
+	echo ""
 	echo "Setting up GOLang environment.."
 	echo ""
 	sleep 2
@@ -57,9 +61,6 @@ else
 	export GOPATH=/usr/local/go/
 	export GOBIN=/usr/local/go/bin/
 fi
-echo "Finished installing GOLang!"
-echo ""
-echo ""
 
 ### PROTOC Installation ###
 echo "Checking Protobuf installation.."
@@ -82,10 +83,9 @@ else
 	sleep 2
 	unzip -o protoc-3.10.0-linux-x86_64.zip -d /usr/local bin/protoc
 	unzip -o protoc-3.10.0-linux-x86_64.zip -d /usr/local 'include/*'
+	echo "Done.."
+	echo ""
 fi
-echo "Finished installing Protobuf!"
-echo ""
-echo ""
 
 ### LIBRDKAFKA Installation ###
 echo "Checking librdkafka installation.."
@@ -94,7 +94,7 @@ sleep 2
 LIBKAFKADIR="/usr/include/librdkafka/"
 if [ -d "$LIBKAFKADIR" ]; then
 	### Take action if $LIBKAFKADIR exists ###
-	echo "libkafka Installed..Continuing.."
+	echo "Libkafka Installed..Continuing.."
 	echo ""
 	sleep 2
 else
@@ -116,26 +116,26 @@ else
 	echo ""
 	sleep 2
 	make install
+	echo "Done.."
+	echo ""
 fi
-echo "Finished installing Librdkafka!"
-echo ""
-echo ""
+echo "Back to $WORKDIR"
 cd $WORKDIR
 sleep 2
+
 ### CB Event Forwarder Installation ###
+echo "#######################################"
 echo "#### Installing CB Event Forwarder ####"
-echo ""
+echo "#######################################"
 echo ""
 sleep 1
 echo "Checking cb-event-forwarder installation.."
-echo ""
 echo ""
 sleep 2
 CBDIR="/usr/share/cb/integrations/event-forwarder/"
 if [ -d "$CBDIR" ]; then
 	### Take action if $CBDIR exists ###
-	echo "Continuing.."
-	echo "cb-event-forwarder installed. Do you want to start the service now? [Y,n]"
+	echo "cb-event-forwarder already installed. Do you want to start the service now? [Y,n]"
 	read input
 	if [[ $input == "Y" || $input == "y" ]]; then
 		echo "Starting CB Event Forwarder service"
@@ -156,6 +156,24 @@ if [ -d "$CBDIR" ]; then
 		exit 1
 	fi
 else
+	echo "cb-event-forwarder not installed..continuing.."
+	echo ""
+	sleep 2
+	CBEFDIR="/root/cb-event/cb-event-forwarder/"
+	if [ -d "$CBEFDIR" ]; then
+		### Take action if $CBEFDIR exists ###
+		echo ""
+		echo "Removing previous cb-event-forwarder directory (if any)"
+		rm -rf $CBEFDIR
+		echo ""
+		sleep 2
+		echo "Directory removed!"
+	else
+		###  Control will jump here if $DIR does NOT exists ###
+		echo "No previous download..continuing.."
+		echo ""
+		sleep 2
+	fi
 	###  Control will jump here if $DIR does NOT exists ###
 	echo "Cloning cb event forwarder git folder.."
 	echo ""
@@ -169,30 +187,32 @@ else
 	echo "RPM file successfully created"
 	echo ""
 	echo "RPM file located at /root/rpmbuild/RPMS/x86_64/"
+	ls /root/rpmbuild/RPMS/x86_64/
 	echo ""
 fi
 echo ""
-echo ""
-echo "Do you want to install now? [Y,n]"
+echo "Do you want to install cb event forwarder now? [Y,n]"
 read input
 if [[ $input == "Y" || $input == "y" ]]; then
         cd /root/rpmbuild/RPMS/x86_64/
 		echo "Installing CB Event Forwarder RPM file"
+		echo ""
 		sleep 2
 		rpm -ivh cb-event-forwarder-3.6-0.x86_64.rpm
 		echo "Starting CB Event Forwarder service"
+		echo ""
 		systemctl start cb-event-forwarder
 		sleep 2
 		echo "Configure CB Event Forwarder to run at startup"
+		echo ""
 		systemctl enable cb-event-forwarder
 		sleep 2
 		echo "Checking CB Event Forwarder status"
 		echo ""
 		systemctl status cb-event-forwarder
 		sleep 2
-		echo "Done!"
+		echo "Done.."
 		sleep 2
-		exit 1
 else
         echo "Exiting.."
 		sleep 2
