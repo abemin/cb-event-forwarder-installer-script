@@ -1,5 +1,44 @@
 #!/bin/bash
 
+### Checking CB Response Installation ###
+echo ""
+echo "####################################################"
+echo "####     Checking CB Response Installation	  ####"
+echo "####################################################"
+sleep 2
+echo ""
+CNFFILE="/etc/cb/cb.conf"
+echo "Checking Carbon Black configuration file.."
+echo ""
+if [ -f "$CNFFILE" ]; then
+	### Take action if $CNFFILE exists ###
+	sleep 2
+	echo "Directory exist!"
+	echo "Script will now proceed.."
+	echo ""
+else
+	###  Control will jump here if $CNFFILE does NOT exists ###
+	echo "Carbon Black installation directory NOT found!"
+	echo ""
+	echo "Are you installing for large deployment? [Y,n]"
+	echo ""
+	read input
+	if [[ $input == "Y" || $input == "y" ]]; then
+		echo "!!! Please read note at the end of installation"
+		echo ""
+		echo "Starting installation script.."
+		echo ""
+		sleep 2
+	else
+        echo "Exiting.."
+		sleep 2
+		exit 1
+	fi
+	echo ""
+	sleep 1
+fi
+sleep 2
+echo ""
 ### Checking and installing dependencies ###
 echo ""
 echo "####################################################"
@@ -16,14 +55,14 @@ WORKDIR="/root/cb-event/"
 echo "Checking working directory.."
 echo ""
 if [ -d "$WORKDIR" ]; then
-	### Take action if $GODIR exists ###
+	### Take action if $WORKDIR exists ###
 	sleep 2
 	echo "Directory exist!"
 	echo "Change into working directory /root/cb-event/"
 	echo ""
 	cd $WORKDIR
 else
-	###  Control will jump here if $DIR does NOT exists ###
+	###  Control will jump here if $WORKDIR does NOT exists ###
 	echo "Creating working directory /root/cb-event/"
 	echo ""
 	sleep 1
@@ -46,7 +85,7 @@ if [ -d "$GODIR" ]; then
 	echo ""
 	sleep 2
 else
-	###  Control will jump here if $DIR does NOT exists ###
+	###  Control will jump here if $GODIR does NOT exists ###
 	echo "GOLang not installed..Installing GOLang.."
 	echo ""
 	echo "Getting GOLang Installation file.."
@@ -68,7 +107,7 @@ else
 fi
 
 ### PROTOC Installation ###
-echo "Checking Protobuf installation.."
+echo "Checking Protobuf installation file.."
 echo ""
 sleep 2
 PROTOCFILE="/usr/local/bin/protoc"
@@ -78,7 +117,7 @@ if [ -f "$PROTOCFILE" ]; then
 	echo ""
 	sleep 2
 else
-	###  Control will jump here if $DIR does NOT exists ###
+	###  Control will jump here if $PROTOCFILE does NOT exists ###
 	echo "Getting Protobuf Installation file.."
 	echo ""
 	sleep 2
@@ -103,7 +142,7 @@ if [ -d "$LIBKAFKADIR" ]; then
 	echo ""
 	sleep 2
 else
-	###  Control will jump here if $DIR does NOT exists ###
+	###  Control will jump here if $LIBKAFKADIR does NOT exists ###
 	echo "Cloning Librdkafka git folder.."
 	echo ""
 	sleep 2
@@ -174,12 +213,12 @@ else
 		sleep 2
 		echo "Directory removed!"
 	else
-		###  Control will jump here if $DIR does NOT exists ###
+		###  Control will jump here if $CBEFDIR does NOT exists ###
 		echo "No previous download..continuing.."
 		echo ""
 		sleep 2
 	fi
-	###  Control will jump here if $DIR does NOT exists ###
+	###  Control will jump here if $CBDIR does NOT exists ###
 	echo "Cloning cb event forwarder git folder.."
 	echo ""
 	sleep 2
