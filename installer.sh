@@ -151,7 +151,7 @@ if [ -d "$CBDIR" ]; then
 		systemctl status cb-event-forwarder
 		sleep 2
 	else
-        echo "Your choice..Exiting.."
+        echo "Exiting.."
 		sleep 2
 		exit 1
 	fi
@@ -184,11 +184,23 @@ else
 	echo ""
 	sleep 2
 	make rpm
-	echo "RPM file successfully created"
-	echo ""
-	echo "RPM file located at /root/rpmbuild/RPMS/x86_64/"
-	ls /root/rpmbuild/RPMS/x86_64/
-	echo ""
+	RPMFILE="/root/rpmbuild/RPMS/x86_64/cb-event-forwarder-3.6-0.x86_64.rpm"
+	if [ -f "$RPMFILE" ]; then
+		### Take action if $RPMFILE exists ###
+		echo "RPM file successfully created.."
+		echo ""
+		echo "RPM file located at /root/rpmbuild/RPMS/x86_64/"
+		ls /root/rpmbuild/RPMS/x86_64/
+		sleep 2
+	else
+		###  Control will jump here if $DIR does NOT exists ###
+		echo "RPM build failed.."
+		echo ""
+		sleep 2
+		echo "Check EXPORT for GOLANG and re-run script.."
+		echo "Exiting.."
+		exit 1
+	fi
 fi
 echo ""
 echo "Do you want to install cb event forwarder now? [Y,n]"
