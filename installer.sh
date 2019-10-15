@@ -3,7 +3,7 @@
 ### Checking CB Response Installation ###
 echo ""
 echo "####################################################"
-echo "####     Checking CB Response Installation      ####"
+echo "####     Checking CB Response Installation	  ####"
 echo "####################################################"
 sleep 2
 echo ""
@@ -30,7 +30,7 @@ else
 		echo ""
 		sleep 2
 	else
-        	echo "Exiting.."
+        echo "Exiting.."
 		sleep 2
 		exit 1
 	fi
@@ -39,7 +39,6 @@ else
 fi
 sleep 2
 echo ""
-
 ### Checking and installing dependencies ###
 echo ""
 echo "####################################################"
@@ -262,19 +261,16 @@ if [[ $input == "Y" || $input == "y" ]]; then
 		echo ""
 		sleep 2
 		rpm -ivh cb-event-forwarder-3.6-0.x86_64.rpm
-		echo "Starting CB Event Forwarder service"
-		echo ""
-		systemctl start cb-event-forwarder
-		sleep 2
-		echo "Configure CB Event Forwarder to run at startup"
-		echo ""
-		systemctl enable cb-event-forwarder
-		sleep 2
-		echo "Checking CB Event Forwarder status"
-		echo ""
-		systemctl status cb-event-forwarder
 		sleep 2
 		echo "Done.."
+		sleep 2
+		echo "# For larger deployments, or for high volume subscriptions (such as raw endpoint events), it is recommended     #"
+		echo "# to install this connector on its own dedicated machine. In this case, fill the following three configuration  #"
+		echo "# options with the RabbitMQUser, RabbitMQPassword, and the IP/hostname of the Cb Response server or master      #"
+		echo "# node respectively. You will have to ensure that your host can connect to TCP port 5004 on the Cb Response     #"
+		echo "# server.																									      #"
+		echo ""
+		echo "Configuration located at /etc/cb/integrations/event-forwarder/cb-event-forwarder.conf"
 		sleep 2
 else
         echo "Exiting.."
